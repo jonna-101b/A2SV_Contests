@@ -1,59 +1,51 @@
-from collections import defaultdict
-
-PAT25 = "2025"
-PAT26 = "2026"
-CHARS = ['0', '2', '5', '6']
-
-def advance(pattern, k, ch):
-    while k > 0 and pattern[k] != ch:
-        k -= 1
-    if pattern[k] == ch:
-        k += 1
-    return k
-
 def solve_case(s):
     n = len(s)
     INF = 10**9
 
-    dp = defaultdict(lambda: INF)
-    dp[(0, 0, 0, False, False)] = 0
+    # ---------- Strategy 1: Force "2026" ----------
+    target = "2026"
+    cost_make_2026 = INF
 
-    for pos in range(n):
-        ndp = defaultdict(lambda: INF)
-        for (i, a, b, f25, f26), cost in dp.items():
-            if i != pos:
-                continue
-            for ch in CHARS:
-                ncost = cost + (ch != s[pos])
+    for i in range(n - 3):
+        cost = 0
+        for j in range(4):
+            if s[i + j] != target[j]:
+                cost += 1
+        cost_make_2026 = min(cost_make_2026, cost)
 
-                na = advance(PAT25, a, ch)
-                nb = advance(PAT26, b, ch)
+    # ---------- Strategy 2: Break all "2025" ----------
+    bad_positions = []
+    for i in range(n - 3):
+        if s[i:i + 4] == "2025":
+            bad_positions.append((i, i + 3))
 
-                nf25 = f25 or (na == 4)
-                nf26 = f26 or (nb == 4)
+    # Already good
+    if not bad_positions:
+        cost_break_2025 = 0
+    else:
+        cost_break_2025 = INF
+        # Try all subsets of positions to change (bitmask)
+        for mask in range(1, 1 << n):
+            changed = set(i for i in range(n) if (mask >> i) & 1)
 
-                if na == 4:
-                    na = 3
-                if nb == 4:
-                    nb = 3
+            ok = True
+            for l, r in bad_positions:
+                # At least one position in the interval must be changed
+                if not any(pos in changed for pos in range(l, r + 1)):
+                    ok = False
+                    break
 
-                state = (pos + 1, na, nb, nf25, nf26)
-                ndp[state] = min(ndp[state], ncost)
-        dp = ndp
+            if ok:
+                cost_break_2025 = min(cost_break_2025, len(changed))
 
-    ans = INF
-    for (pos, a, b, f25, f26), cost in dp.items():
-        if pos == n and (f26 or not f25):
-            ans = min(ans, cost)
-
-    return ans
+    return min(cost_make_2026, cost_break_2025)
 
 
 if __name__ == "__main__":
     t = int(input())
     testcases = []
 
-    # read all input first
+    # read all input
     for _ in range(t):
         n = int(input())
         s = input().strip()
