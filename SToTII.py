@@ -9,7 +9,7 @@ def checkOrder(s, t):
             return False
 
         else:
-            start = pos
+            start = pos + 1
 
     return True
 
