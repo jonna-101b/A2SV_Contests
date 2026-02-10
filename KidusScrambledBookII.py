@@ -18,5 +18,7 @@ for _ in range(tc):
             num2 = int(num2)
             if num2 > num1:
                 print(num1, num2)
-                exit()
-    print(-1)
+                break
+
+    else:
+        print(-1)
