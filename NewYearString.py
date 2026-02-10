@@ -4,7 +4,7 @@ def checkThisYear(chars: deque[str]) -> bool:
   return "".join(chars) == "2026"
 
 def checkNewYear(chars: deque[str]) -> bool:
-  return "".join(chars) != "2025"
+  return "".join(chars) == "2025"
   
 def checkTestcase(testcase: str, window: deque[str]) -> None:
   if checkThisYear(window):
@@ -12,7 +12,7 @@ def checkTestcase(testcase: str, window: deque[str]) -> None:
     return 
 
   this_year_present = False
-  last_year_present = not checkNewYear(window)
+  last_year_present = checkNewYear(window)
   
   for i in range(4, len(testcase)):
     window.popleft()
