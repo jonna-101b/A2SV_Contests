@@ -9,7 +9,7 @@ def checkNewYear(chars: deque[str]) -> bool:
   
 def checkTestcase(testcase: str, window: deque[str]) -> None:
   this_year_present = False
-  last_year_present = checkNewYear(window)
+  last_year_present = not checkNewYear(window)
   
   for i in range(4, len(testcase)):
     window.popleft()
@@ -38,9 +38,6 @@ def minSteps(testcases: List[str]) -> None:
     if checkThisYear(window):
       print(0)
       continue
-    elif not checkNewYear(window):
-      print(1)
-      continue
     
     checkTestcase(testcase, window)
 
@@ -53,4 +50,5 @@ if "__main__":
       chars = input()
       testcases.append(chars)
       
+    print(testcases)
     minSteps(testcases)
