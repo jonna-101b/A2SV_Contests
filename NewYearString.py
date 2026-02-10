@@ -1,61 +1,56 @@
-def solve_case(s):
-    n = len(s)
-    INF = 10**9
+from collections import deque
+from typing import List
 
-    # ---------- Strategy 1: Force "2026" ----------
-    target = "2026"
-    cost_make_2026 = INF
+def checkThisYear(chars: deque[str]) -> bool:
+  return "".join(chars) == "2026"
 
-    for i in range(n - 3):
-        cost = 0
-        for j in range(4):
-            if s[i + j] != target[j]:
-                cost += 1
-        cost_make_2026 = min(cost_make_2026, cost)
+def checkNewYear(chars: deque[str]) -> bool:
+  return "".join(chars) != "2025"
+  
+def checkTestcase(testcase: str, window: deque[str]) -> None:
+  this_year_present = False
+  last_year_present = checkNewYear(window)
+  
+  for i in range(4, len(testcase)):
+    window.popleft()
+    window.append(testcase[i])
+    if checkThisYear(window):
+      this_year_present = True
+      break
+    
+    if checkNewYear(window):
+      last_year_present = True
+      
+  if this_year_present:
+    print(0)
+  elif last_year_present:
+    print(1)
+  else:
+    print(0)
 
-    # ---------- Strategy 2: Break all "2025" ----------
-    bad_positions = []
-    for i in range(n - 3):
-        if s[i:i + 4] == "2025":
-            bad_positions.append((i, i + 3))
+def minSteps(testcases: List[str]) -> None:
+  for testcase in testcases:
+    if len(testcase) < 4:
+      print(0)
+      continue
+    
+    window = deque([testcase[i] for i in range(4)])
+    if checkThisYear(window):
+      print(0)
+      continue
+    elif not checkNewYear(window):
+      print(1)
+      continue
+    
+    checkTestcase(testcase, window)
 
-    # Already good
-    if not bad_positions:
-        cost_break_2025 = 0
-    else:
-        cost_break_2025 = INF
-        # Try all subsets of positions to change (bitmask)
-        for mask in range(1, 1 << n):
-            changed = set(i for i in range(n) if (mask >> i) & 1)
-
-            ok = True
-            for l, r in bad_positions:
-                # At least one position in the interval must be changed
-                if not any(pos in changed for pos in range(l, r + 1)):
-                    ok = False
-                    break
-
-            if ok:
-                cost_break_2025 = min(cost_break_2025, len(changed))
-
-    return min(cost_make_2026, cost_break_2025)
-
-
-if __name__ == "__main__":
-    t = int(input())
+if "__main__":
+    no_of_tetscases = int(input())
     testcases = []
 
-    # read all input
-    for _ in range(t):
-        n = int(input())
-        s = input().strip()
-        testcases.append(s)
-
-    # process
-    results = []
-    for s in testcases:
-        results.append(solve_case(s))
-
-    # output
-    for r in results:
-        print(r)
+    for _ in range(no_of_tetscases):
+      chars_length = int(input())
+      chars = input()
+      testcases.append(chars)
+      
+    minSteps(testcases)
