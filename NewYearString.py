@@ -1,5 +1,4 @@
 from collections import deque
-from typing import List
 
 def checkThisYear(chars: deque[str]) -> bool:
   return "".join(chars) == "2026"
@@ -8,6 +7,10 @@ def checkNewYear(chars: deque[str]) -> bool:
   return "".join(chars) != "2025"
   
 def checkTestcase(testcase: str, window: deque[str]) -> None:
+  if checkThisYear(window):
+    print(0)
+    return 
+
   this_year_present = False
   last_year_present = not checkNewYear(window)
   
@@ -28,27 +31,10 @@ def checkTestcase(testcase: str, window: deque[str]) -> None:
   else:
     print(0)
 
-def minSteps(testcases: List[str]) -> None:
-  for testcase in testcases:
-    if len(testcase) < 4:
-      print(0)
-      continue
-    
-    window = deque([testcase[i] for i in range(4)])
-    if checkThisYear(window):
-      print(0)
-      continue
-    
-    checkTestcase(testcase, window)
-
 if "__main__":
     no_of_tetscases = int(input())
-    testcases = []
 
     for _ in range(no_of_tetscases):
       chars_length = int(input())
       chars = input()
-      testcases.append(chars)
-      
-    print(testcases)
-    minSteps(testcases)
+      checkTestcase(chars, deque([chars[i] for i in range(4)]))
