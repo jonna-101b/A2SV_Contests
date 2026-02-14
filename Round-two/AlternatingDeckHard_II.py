@@ -1,3 +1,15 @@
+def clacBlack(start, end, counter):
+    if counter % 2 == 0:
+        return (end - start + 1) // 2
+    else:  
+        if start:
+            if start % 2 == 0:
+                return (end - start) // 2 + 1
+            else:
+                return (end - start) // 2
+        else:
+            return 0
+
 if __name__ == "__main__":
     no_of_testcases = int(input())
     
@@ -14,30 +26,14 @@ if __name__ == "__main__":
         steps = 1
 
         while cards > 0:
+            black = clacBlack(last_count, curr_count if counter < cards else last_count + cards - 1, counter)
+
             if isAlice:
-                if last_count == 0:
-                    alice_w += 1
-
-                else:
-                    start = last_count
-                    end = curr_count + 1 if counter < cards else last_count + cards
-                    for i in range(start, end):
-                        if i % 2 == 0:
-                            alice_b += 1
-                        else:
-                            alice_w += 1
+                alice_w += counter - black if counter < cards else cards - black
+                alice_b += black
             else:
-                if last_count == 0:
-                    bob_w += 1
-
-                else:
-                    start = last_count
-                    end = curr_count + 1 if counter < cards else last_count + cards
-                    for i in range(start, end):
-                        if i % 2 == 0:
-                            bob_b += 1
-                        else:
-                            bob_w += 1
+                bob_w += counter - black if counter < cards else cards - black
+                bob_b += black
 
             cards -= counter
             steps += 1
