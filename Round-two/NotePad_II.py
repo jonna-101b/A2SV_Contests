@@ -13,8 +13,12 @@ if __name__ == "__main__":
             pair += char
             pair = pair[1:] if len(pair) > 2 else pair
 
-            if len(pair) == 2 and last_pair != pair:
-                if pair in occurred:
+            if len(pair) == 2:
+                if pair == last_pair:
+                    last_pair = ""
+                    continue
+                
+                elif pair in occurred:
                     print("YES")
                     printed  = True
                     break
