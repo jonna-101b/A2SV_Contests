@@ -15,3 +15,5 @@ def solve():
             seen.add(sub)
         
         print("YES" if possible else "NO")
+
+solve()
