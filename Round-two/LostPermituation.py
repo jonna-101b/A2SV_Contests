@@ -1,43 +1,28 @@
-if __name__ == "__main__":
-    no_of_testcases = int(input())
+t = int(input())
 
-    for _ in range(no_of_testcases):
-        m, p_sum = [int(num) for num in input().split()]
-        p = [int(num) for num in input().split()]
-        p.sort()
-        p_len = p[-1]
-        i = 1
-        index = 0
-        printed = False
-
-        while p_sum > 0:
-            if index < len(p):
-                if p[index] != i:
-                    p_sum -= i
-                    index -= 1 if i != 1 else 0
-            else:
-                p_sum -= i
- 
-            if p_sum < 0:
-                print("NO")
-                printed = True
-            if p_sum == 0 and index >= len(p):
-                print("YES")
-                printed = True
-            i += 1
-            index += 1
-        
-        if index < len(p) and p_sum == 0:
-            for j in range(index, len(p)):
-                if p[j] != i:
-                    p_sum -= p[j]
-
-                if p_sum < 0:
-                    print("NO")
-                    printed = True
-        
-        if not printed:
-            if p_sum < 0:
-                print("NO")
-            elif p_sum == 0:
-                print("YES")
+for _ in range(t):
+    m, s = map(int, input().split())
+    b = list(map(int, input().split()))
+    
+    sum_b = sum(b)
+    total = sum_b + s
+    
+    n = 0
+    found_n = False
+    
+    
+    for i in range(1, 1000):
+        if i * (i + 1) // 2 == total:
+            n = i
+            found_n = True
+            break
+    
+    if not found_n:
+        print("NO")
+        continue
+    
+    if len(set(b)) != m or any(x > n for x in b):
+        print("NO")
+        continue
+    
+    print("YES")
