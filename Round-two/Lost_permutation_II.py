@@ -10,8 +10,10 @@ if __name__ == "__main__":
 
         for i in range(m):
             if b[i] != counter:
-                s -= counter
-                counter += 1 if counter < b[i] else 0
+                while counter < b[i]:
+                    s -= counter
+                    counter += 1
+
                 if s < 0:
                     print("NO")
                     printed = True
