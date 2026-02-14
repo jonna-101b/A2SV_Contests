@@ -6,19 +6,21 @@ if __name__ == "__main__":
         s = input().strip()
         occurred = set()
         pair = ""
+        last_pair = ""
         printed = False
 
         for char in s:
             pair += char
             pair = pair[1:] if len(pair) > 2 else pair
 
-            if len(pair) == 2:
+            if len(pair) == 2 and last_pair != pair:
                 if pair in occurred:
                     print("YES")
                     printed  = True
                     break
 
                 occurred.add(pair)
+                last_pair = pair
 
         if not printed:
             print("NO")
