@@ -15,9 +15,5 @@ if __name__ == "__main__":
         counter += 1
         indicies.append(i + 1)
 
-    if counter:
-        print(counter)
-        print(*indicies)
-
-    else:
-        print(0)
+    print(counter)
+    print(*indicies)
