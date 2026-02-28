@@ -1,20 +1,17 @@
-if __name__ == "__main__":
-    no_of_testcases = int(input())
-
-    for _ in range(no_of_testcases):
-        n, l, r = [ int(num) for num in input().strip().split() ]
-        cards = [ int(num) for num in input().strip().split() ]
-        cards_sum = 0
-        wins = 0
-
-        for card in cards:
-            cards_sum += card
-
-            if l <= cards_sum <= r:
-                wins += 1
-                cards_sum = 0
-
-            elif cards_sum > r:
-                cards_sum = 0
-
-        print(wins)
+tc = int(input())
+for _ in range(tc):
+    n, l, r = map(int, input().split())
+    arr = list(map(int, input().split()))
+    left = 0
+    current_sum = 0
+    wins = 0
+    for right in range(n):
+        current_sum += arr[right]
+        while current_sum > r and left <= right:
+            current_sum -= arr[left]
+            left += 1
+        if l <= current_sum <= r:
+            wins += 1
+            current_sum = 0
+            left = right + 1
+    print (wins)
