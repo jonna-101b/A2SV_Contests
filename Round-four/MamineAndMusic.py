@@ -18,3 +18,6 @@ if __name__ == "__main__":
     if counter:
         print(counter)
         print(*indicies)
+
+    else:
+        print(0)
