@@ -13,7 +13,7 @@ if __name__ == "__main__":
             break
 
         counter += 1
-        indicies.append(i)
+        indicies.append(i + 1)
 
     if counter:
         print(counter)
