@@ -1,29 +1,32 @@
-if __name__ == "main":
-    no_of_testcases = int(input())
+t = int(input())
 
-    for _ in range(no_of_testcases):
-        n = int(input())
-        num = [digit for digit in input().strip()]
+for _ in range(t):
+    n = int(input())
+    s = input().strip()
 
-        while len(num) > 1 and int(num[-1]) % 2 == 0:
-            num.pop()
+    found = False
 
-        if len(num) == 1:
-            print(-1)
-        else:
-            odd_count = 0
-            odd = None
+    for i in range(n):
+        last = int(s[i])
 
-            for i in range(len(num)):
-                if int(num[i]) % 2 != 0:
-                    odd_count += 1
-                    if i != len(num) - 1:
-                        odd = i
+        if last % 2 == 1:  # must end with odd digit
+            prefix = []
+            prefix_sum = 0
 
-            if odd_count % 2 == 0:
-                print("".join(num))
-            else:
-                if odd is None:
-                    print(-1)
-                else:
-                    print("".join(num[i] for i in range(len(num)) if i != odd))
+            for j in range(i):
+                prefix.append(s[j])
+                prefix_sum += int(s[j])
+
+                if prefix_sum % 2 == 1:  # prefix sum must be odd
+                    res = "".join(prefix) + s[i]
+
+                    if res[0] != '0':  # avoid leading zero
+                        print(res)
+                        found = True
+                        break
+
+            if found:
+                break
+
+    if not found:
+        print(-1)
