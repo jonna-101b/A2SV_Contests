@@ -1,33 +1,30 @@
-if __name__ == "main":
-    no_of_testcases = int(input())
+t = int(input())
 
-    for _ in range(no_of_testcases):
-        order = { chr(i): i - ord("a") + 1 for i in range(ord("a"), ord("z") + 1) }
-        string = input().strip()
-        p = int(input())
-        w = []
-        sorted_w = []
-        price = 0
+for _ in range(t):
+    w = input().strip()
+    p = int(input())
 
-        for char in string:
-            price += order[char]
-            w.append((char, False))
-            sorted_w.append(char)
+    values = [ord(c) - ord('a') + 1 for c in w]
+    total = sum(values)
 
-        if price <= p:
-            print("".join([ char for char, deleted in w ]))
+    if total <= p:
+        print(w)
+        continue
 
-        else:
-            sorted_w.sort(reverse = True)
-            i = 0
+    chars = [(values[i], i) for i in range(len(w))]
+    chars.sort(reverse=True)  # remove largest letters first
 
-            while price > p:
-                for j in range(len(w)):
-                    if w[j][0] == sorted_w[i]:
-                        w[j][1] = True
-                        price -= order[w[j][0]]
-                        break
+    removed = set()
 
-                i += 1
+    for value, idx in chars:
+        if total <= p:
+            break
+        total -= value
+        removed.add(idx)
 
-            print("".join([ char for char, deleted in w if deleted == False ]))
+    result = []
+    for i in range(len(w)):
+        if i not in removed:
+            result.append(w[i])
+
+    print("".join(result))
