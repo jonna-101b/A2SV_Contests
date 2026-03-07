@@ -1,27 +1,33 @@
 if __name__ == "main":
-    t = int(input())
+    no_of_testcases = int(input())
 
-    for _ in range(t):
-        w = input().strip()
+    for _ in range(no_of_testcases):
+        order = { chr(i): i - ord("a") + 1 for i in range(ord("a"), ord("z") + 1) }
+        string = input().strip()
         p = int(input())
+        w = []
+        sorted_w = []
+        price = 0
 
-        price = sum(ord(c) - ord('a') + 1 for c in w)
+        for char in string:
+            price += order[char]
+            w.append((char, False))
+            sorted_w.append(char)
 
-        chars = [(ord(c) - ord('a') + 1, i) for i, c in enumerate(w)]
-        chars.sort(reverse=True)
+        if price <= p:
+            print("".join([ char for char, deleted in w ]))
 
-        removed = [False] * len(w)
+        else:
+            sorted_w.sort(reverse = True)
+            i = 0
 
-        i = 0
-        while price > p:
-            value, idx = chars[i]
-            removed[idx] = True
-            price -= value
-            i += 1
+            while price > p:
+                for j in range(len(w)):
+                    if w[j][0] == sorted_w[i]:
+                        w[j][1] = True
+                        price -= order[w[j][0]]
+                        break
 
-        result = []
-        for i in range(len(w)):
-            if not removed[i]:
-                result.append(w[i])
+                i += 1
 
-        print("".join(result))
+            print("".join([ char for char, deleted in w if deleted == False ]))
