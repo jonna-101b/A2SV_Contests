@@ -14,9 +14,10 @@ if __name__ == "__main__":
             if difference:
                 diff[difference] += 1
 
-        max_nums = 0
+        max_nums = 1
         for difference in diff:
-            actual = min(n//difference, diff[difference] + 1)
+            minimum = n//difference if n//difference > 1 else (2 if n//difference == 1 else 0)
+            actual = min(minimum, diff[difference] + 1)
             max_nums = max(max_nums, actual)
 
         print(max_nums)
