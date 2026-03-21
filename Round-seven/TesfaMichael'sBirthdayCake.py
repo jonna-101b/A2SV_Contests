@@ -8,7 +8,7 @@ if __name__ == "__main__":
         if k == 0:
             break
 
-        if prev is not None or ord(letter) - ord(prev) > 1:
+        if prev is None or ord(letter) - ord(prev) > 1:
             weight += ord(letter) - ord("a") + 1
             k -= 1
             prev = letter
