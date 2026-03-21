@@ -8,6 +8,9 @@ if __name__ == "__main__":
         n, m = [ int(num) for num in input().strip().split() ]
 
         def check(n = n, m = m):
+            if n == m:
+                return True
+            
             if n % 3 != 0 or m > n:
                 return False
             
