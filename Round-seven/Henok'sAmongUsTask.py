@@ -1,5 +1,3 @@
-from math import log2
-
 if __name__ == "__main__":
     a, b = [ int(num) for num in input().strip().split() ]
     path = []
