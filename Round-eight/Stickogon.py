@@ -7,7 +7,6 @@ if __name__ == "__main__":
         n = int(input())
         sticks = [ int(num) for num in input().strip().split() ]
         occurrence = Counter(sticks)
-        # sticks.sort()
         total = 0
 
         for stick in occurrence:
