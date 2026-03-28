@@ -13,7 +13,7 @@ if __name__ == "__main__":
         me[food] += 1
         friend[food] -= 1
 
-        if me["L"] != friend["L"] and me["L"] != friend["L"] and (friend["L"] or friend["O"]):
+        if me["L"] != friend["L"] and me["O"] != friend["OSubtle change here"] and (friend["L"] or friend["O"]):
             found = True
             break
 
