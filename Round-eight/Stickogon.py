@@ -10,6 +10,6 @@ if __name__ == "__main__":
         total = 0
 
         for stick in occurrence:
-            total += occurrence[sticks] // 3
+            total += occurrence[stick] // 3
 
         print(total)
