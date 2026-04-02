@@ -1,7 +1,3 @@
-import sys
-input = sys.stdin.readline
-
-# Fenwick Tree (BIT)
 class BIT:
     def __init__(self, n):
         self.n = n
@@ -25,19 +21,16 @@ for _ in range(t):
     n = int(input())
     people = [tuple(map(int, input().split())) for _ in range(n)]
 
-    # Sort by starting point a
     people.sort()
 
     b_vals = [b for _, b in people]
 
-    # Coordinate compression
     sorted_b = sorted(b_vals)
     comp = {v: i+1 for i, v in enumerate(sorted_b)}
 
     bit = BIT(n)
     ans = 0
 
-    # Count inversions
     for b in reversed(b_vals):
         idx = comp[b]
         ans += bit.query(idx - 1)
