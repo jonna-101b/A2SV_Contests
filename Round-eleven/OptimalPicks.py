@@ -5,20 +5,27 @@ if __name__ == "__main__":
         n, k = list(map(int, input().split()))
         costs = list(map(int, input().split()))
         costs.sort(reverse=True)
-        eve = 0
-        noah = 0
+        score = 0
+        diff = 0
         isEveTurn = True
 
         for cost in costs:
             if isEveTurn:
-                eve += cost
+                diff = cost
             else:
-                noah += cost
+                needed = diff - cost
+                if needed <= k:
+                    diff = 0
+                    k -= needed
+                else:
+                    diff -= cost + k
+                    k = 0
+
+                score += diff
+                diff = 0
+                
 
             isEveTurn = not isEveTurn
 
-        diff = abs(eve - noah)
-        if k > diff:
-            print(0)
-        else:
-            print(diff - k)
+        score += diff
+        print(score)
