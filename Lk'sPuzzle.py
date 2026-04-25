@@ -1,12 +1,13 @@
 def solve(n, m, board):
-    visted = [[False]*m for _ in range(n)]
+    visited = [[False]*m for _ in range(n)]
     
-    def DFS(r, c, pr, pc, color):
-        if visted[r][c]:
+    def dfs(r, c, pr, pc, color):
+        if visited[r][c]:
             return True
-            
-        visted[r][c] = True
-        dxn = [(1, 0), (-1, 0), (0, 1), (0 ,-1)]
+        
+        visited[r][c] = True
+        
+        directions = [(1,0), (-1,0), (0,1), (0,-1)]
         
         for dr, dc in directions:
             nr, nc = r + dr, c + dc
@@ -15,23 +16,25 @@ def solve(n, m, board):
                 if board[nr][nc] != color:
                     continue
                 
-            if nr == pr and nc == pc:
-                continue
-            
-            if DFS(nr, nc, r, c, color):
-                return True
+                # skip the parent cell
+                if nr == pr and nc == pc:
+                    continue
                 
+                if dfs(nr, nc, r, c, color):
+                    return True
+        
         return False
- 
+
     for i in range(n):
         for j in range(m):
-            if not visted[i][j]:
-                if DFS(i, j, -1, -1, board[i][j]):
-                    return "YES"
-                
-    return "NO"
- 
+            if not visited[i][j]:
+                if dfs(i, j, -1, -1, board[i][j]):
+                    return "Yes"
+    
+    return "No"
+
+
 if __name__ == "__main__":
-    n, m = list(map(int, input().split()))
-    board = [ input().strip().split() for _ in range(n) ]
-    print(solve(n, m, board))
+    n, m = map(int, input().split())
+    board = [list(input().strip()) for _ in range(n)]
+    print(solve(n, m, board))    print(solve(n, m, board))
