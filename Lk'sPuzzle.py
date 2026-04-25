@@ -37,4 +37,4 @@ def solve(n, m, board):
 if __name__ == "__main__":
     n, m = map(int, input().split())
     board = [list(input().strip()) for _ in range(n)]
-    print(solve(n, m, board))    print(solve(n, m, board))
+    print(solve(n, m, board))
